@@ -15,6 +15,8 @@ class ahb_agent extends uvm_agent ;
    // ahb monitor variable declaration 
    ahb_monitor ahb_mntr_inst	;
 
+  // analysis port 
+  uvm_analysis_port#(ahb_sequ_item_base) a_prt;
 
    funciton new(string name="ahb_agent",uvm_component parent);
       super.new(name,parent);
@@ -29,6 +31,11 @@ class ahb_agent extends uvm_agent ;
 	   ahb_drv_inst=ahb_driver::type_id::create("ahb_drv_inst",this);
 	   // Creating object for the monitor 
 	   ahb_mntr_inst=ahb_monitor::type_id::create("ahb_mntr_inst",this);
-endclass:ahb_agent 
+endclass:ahb_agent
+
+virtual function void connect_phase(uvm_phase phase);
+	super.connect_phase(phase);
+	this.a_prt = ahb_mntr_inst.a_prt;// Just Pointing the actual analysis port in monitor.
+endfunction:connect_phase
 
 
