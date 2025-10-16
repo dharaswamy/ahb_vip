@@ -8,7 +8,7 @@ class ahb_monitor extends uvm_monitor;
 
 
 	// Virtaul interface 
-	// 
+	virtual ahb_interface ahb_vintf; 
 
 	
 	// new() 

@@ -10,7 +10,7 @@ class ahb_driver extends uvm_driver#(ahb_sequ_item_base);
 
 
 	// virtaul interface handle declaration 
-	//
+	virtual ahb_interface ahb_vintf ; 
 	
 
 	// Function new() 
