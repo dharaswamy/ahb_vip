@@ -25,10 +25,14 @@ class ahb_agent extends uvm_agent ;
 
    virtual function void build_phase(uvm_phase phase);
 	   super.build_phase(phase);
+	   if(!uvm_config_db(ahb_config_agent)::get(this,"","ahb_cfg_agt_inst",ahb_cfg_agt_inst)) 
+		   `uvm_fatal(get_full_name()," Get call Failed") ;
+	   if(ahb_cfg_agt_inst.is_active == UVM_ACTIVE) begin
 	   // Creating object for sequencer 
 	   ahb_sqr_inst=ahb_sequencer::type_id::create("ahb_sqr_inst",this);
 	   // Creating object for the Driver 
 	   ahb_drv_inst=ahb_driver::type_id::create("ahb_drv_inst",this);
+           end
 	   // Creating object for the monitor 
 	   ahb_mntr_inst=ahb_monitor::type_id::create("ahb_mntr_inst",this);
 endclass:ahb_agent
