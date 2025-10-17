@@ -37,7 +37,13 @@ class ahb_driver extends uvm_driver#(ahb_sequ_item_base);
 
 	virtual protected task run_phase(uvm_phase phase);
 		super.run_phase(phase);
-
+		//wait(!ahb_vintf.hresetn);
+		forever begin
+			seq_item_port.get_next_item(req);
+			`uvm_info("TRANSACTION_RECIEVED",$sformatf("%0s",req.sprint(),UVM_HIGH)
+			//drive
+			seq_item_port.item_done(req);
+		end
 	endtask:run_phase
 
 

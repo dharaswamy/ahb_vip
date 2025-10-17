@@ -35,11 +35,13 @@ class ahb_agent extends uvm_agent ;
            end
 	   // Creating object for the monitor 
 	   ahb_mntr_inst=ahb_monitor::type_id::create("ahb_mntr_inst",this);
-endclass:ahb_agent
+   endfunction:build_phase
 
 virtual function void connect_phase(uvm_phase phase);
 	super.connect_phase(phase);
 	this.a_prt = ahb_mntr_inst.a_prt;// Just Pointing the actual analysis port in monitor.
+ahb_drv_inst.seq_item_port.connect(ahb_sqr_inst.seq_item_export);
 endfunction:connect_phase
 
+endclass:ahb_agent
 
