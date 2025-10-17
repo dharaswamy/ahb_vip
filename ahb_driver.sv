@@ -12,6 +12,8 @@ class ahb_driver extends uvm_driver#(ahb_sequ_item_base);
 	// virtaul interface handle declaration 
 	virtual ahb_interface ahb_vintf ; 
 	
+	// 
+	ahb_cofig_agent ahb_cfg_agt_inst;
 
 	// Function new() 
 	//
@@ -22,7 +24,15 @@ class ahb_driver extends uvm_driver#(ahb_sequ_item_base);
 
 	virtual function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
+		if(!uvm_config_db#(ahb_config_agent)::get(this,"","ahb_cfg-agt_inst",ahb_cfg_agt_inst))begin
+			`uvm_fatal("AHB_CONFIG_AGENT","First set the ahb_cfg_agt_inst into the config db")
+		end
 	endfunction:build_phase
+
+	virtual function void connect_phase(uvm_phase phase);
+		super.connect_phase(phase);
+		this.ahb_vintf=ahb_cfg_agt_inst.ahb_vintf;
+	endfunction:connect_phase
 
 
 	virtual protected task run_phase(uvm_phase phase);

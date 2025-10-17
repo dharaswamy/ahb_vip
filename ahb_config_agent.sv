@@ -1,5 +1,5 @@
 
-class ahb_cofig_agent extends uvm_object;
+class ahb_config_agent extends uvm_object;
 	
 	// Factory Registration 
 	`uvm_object_utils(ahb_config_agent)

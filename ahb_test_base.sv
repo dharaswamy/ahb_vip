@@ -19,7 +19,9 @@ class ahb_test_base extends uvm_test;
 
 	// 
 	uvm_core_service_t cs = uvm_core_service_t::get(); 
-
+	
+	// virtual interface
+	virtual ahb_interface ahb_vintf;
 
 	//Default Constructor :new() 
 	//
@@ -33,8 +35,13 @@ class ahb_test_base extends uvm_test;
 	function void build_phase(uvm_phase phase);
 
 		super.build_phase(phase);
+		if(!uvm_config_db(virtual ahb_interface)::get(this,"","ahb_vintf",ahb_vintf)) begin
+			`uvm_fatal("CONFIG_DB","First set the ahb_vintf into the config db");
+		end
 		// Creating the object for the ahb_env 
 		ahb_env_inst = ahb_env::type_id::create("ahb_env_inst",this);
+		ahb_env_inst.ahb_vintf=this.ahb_vintf;
+
 
 	endfunction:build_phase 
 
